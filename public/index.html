@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web OpenCV</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<style>
+  [v-cloak] {
+    display: none;
+  }
+</style>
+
+<body>
+  <div id="vue" v-cloak>
+    <button @click=showWebcam>Open Webcam</button>
+    <button @click=closeWebcam>Close Webcam</button>
+    <!-- OpenCV -->
+    <div>
+      <img v-if="isVideoConnect" :src="opencvFrame" alt="Image" width="640" height="480">
+    </div>
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+
+  <script>
+		
+		const BASE_URL = 'http://localhost:3000';
+    let data =  {
+        opencvFrame: ''
+	    }
+    const socket = io()
+      .on('connect', () => { console.log('socket成功連線') })
+      .on('disconnect', () => { console.log('斷開連結') })
+      .on('node-server-frame', (frame) => {
+        // 創建Blob URL
+        const blob = new Blob([frame], { type: 'image/jpeg' })
+        data.opencvFrame = URL.createObjectURL(blob)
+				// data.opencvFrame = 'data:image/jpeg;base64, ' + frame
+      });
+		
+    let vue = new Vue({
+      el: '#vue', 
+			data: data,
+      created: function () {
+        this.init()
+      },
+      mounted: function () {
+      },
+      watch: {
+      },
+      computed: {
+        isVideoConnect: function () {
+          return this.opencvFrame.length > 0
+        }
+      },
+      methods: {
+        init: function () {
+          this.api()
+        },
+        api: function () {
+					axios.get('/')
+						 .then(function (response) {
+						 })
+						 .catch(function (error) {
+						   console.log(error);
+						 })
+        },
+        showWebcam() {
+          socket.emit('open-webcam')
+        },
+        closeWebcam() {
+          socket.emit('close-webcam')
+          this.opencvFrame = ''
+        },
+        screenshot() {
+          socket.emit('capture-screenshot')
+        }
+      }
+    });
+  </script>
+</body>
+</html>
