@@ -9,7 +9,7 @@ What things you need to install the software and how to install:
 
 - NVM - To install node modules
 - Node.js >= 8.17.0 - To build the web server
-- Python >= 3.11.6 - To catch the camera stream
+- Python >= 3.11.6 - To capture the camera stream
 
 ### Installing
 1. Download and install [NVM](https://github.com/coreybutler/nvm-windows/releases) (nvm-setup.exe) on your local machine (for windows)
