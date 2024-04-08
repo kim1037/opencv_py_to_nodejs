@@ -1,5 +1,5 @@
 # opencv_py_to_nodejs
-This is a project that displays streaming video from a USB camera or IP camera (RTSP) on the web. It uses Python 3.11.6 and at least version 8.15.0 of Node.js. Please ensure the required environments are installed before launching the project.
+This is a project that displays streaming video from a USB camera or IP camera (RTSP) on the web. It uses Python 3.11.6 and at least version 8.17.0 of Node.js. Please ensure the required environments are installed before launching the project.
 
 ## Getting Started
 Follow the instructions below to set up and run the project on your local machine for development and testing purposes.
